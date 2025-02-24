@@ -697,7 +697,7 @@ def step9(bertemb):
             # print(words)
             embeddings = sentence_with_embeddings[1]
             #print(save_path + file + '_sentence' + str(l) + '_word_embeddings.csv')
-            w0 = csv.writer(open(os.path.join(save_path , file + '_sentence' + str(l) + '_word_embeddings.csv'), "a",encoding="utf-8"))
+            w0 = csv.writer(open(os.path.join(save_path , file + '_sentence' + str(l) + '_word_embeddings.csv'), "a",encoding="utf-8",newline=''))
             for i in range(len(words)):
                 w0.writerow([words[i], embeddings[i]])
 
@@ -814,7 +814,7 @@ def step10(language):
 
     #text_path = './' + dataset + '/docsutf8/'
     #output_path = './' + dataset + '/processed_' + dataset + '/'
-    save_path = os.path.join(PROCESSED_FOLDER, 'candidate_cross_attn_value/')
+    save_path = os.path.join(PROCESSED_FOLDER, 'candidate_cross_attn_value')
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
@@ -901,7 +901,7 @@ def step10(language):
             output = cosine_similarity(query_inner_attn.cpu().numpy(), doc_inner_attn.cpu().numpy())
             ranking_dict[querys_name_set[w]] = float(output)
         print(ranking_dict)
-        w0 = csv.writer(open(os.path.join(save_path , file + '_candidate_cross_attn_value.csv'), "a",encoding="utf-8"))
+        w0 = csv.writer(open(os.path.join(save_path , file + '_candidate_cross_attn_value.csv'), "a",encoding="utf-8",newline=''))
         for k, v in sorted(ranking_dict.items(), key=lambda item: item[1], reverse=True):
             # print(k,v)
             w0.writerow([k, v])
