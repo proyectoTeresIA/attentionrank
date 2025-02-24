@@ -118,7 +118,7 @@ def generate_results( language, f1_top=10):
     # load  df
     df_dict = {}
     df_path = os.path.join( PROCESSED_FOLDER , 'df_dict')
-    with open(os.path.join(df_path , dataset + "_candidate_df.csv"), newline='') as csvfile:
+    with open(os.path.join(df_path , dataset + "_candidate_df.csv"), newline='',encoding="utf-8") as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         for row in spamreader:
             k = row[0].lower()
@@ -138,7 +138,7 @@ def generate_results( language, f1_top=10):
         cross_attn_dict_path = os.path.join(PROCESSED_FOLDER , 'candidate_cross_attn_value')
         tail = "_candidate_cross_attn_value.csv"
         # print(cross_attn_dict_path + file + tail)
-        with open( os.path.join(cross_attn_dict_path , file + tail), newline='') as csvfile:
+        with open( os.path.join(cross_attn_dict_path , file + tail), newline='',encoding="utf-8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             v=0
             k=''
@@ -187,7 +187,7 @@ def generate_results( language, f1_top=10):
             accumulated_self_attn_dict_first = {}
             tail0 = "_attn_paired.csv"
 
-            with open( os.path.join(accumulated_self_attn_path , file + tail0), newline='') as csvfile:
+            with open( os.path.join(accumulated_self_attn_path , file + tail0), newline='',encoding="utf-8") as csvfile:
                 spamreader = csv.reader(csvfile, delimiter=',')
                 for row in spamreader:
                     k = row[0].lower()

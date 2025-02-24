@@ -25,7 +25,7 @@ def write_csv_file(file_name, content, mode='w'):
     # content is list of lists
     # w = csv.writer(open(file_name, "w"))
     print('Writting file: ' + file_name)
-    with open(file_name, mode) as myfile:
+    with open(file_name, mode,encoding="utf-8") as myfile:
         wrtr = csv.writer(myfile)  # , delimiter=',', quotechar='"'
         for row in content:
             wrtr.writerow([row[0], row[1]])
@@ -36,7 +36,7 @@ def write_list_file(filepath, list, mode='w'):
     # content is list of lists
     # w = csv.writer(open(file_name, "w"))
     print('Writting file: ' + filepath)
-    with open(filepath, mode) as archivo:
+    with open(filepath, mode,encoding="utf-8") as archivo:
         for element in list:
             archivo.write(str(element) + '\n')
 

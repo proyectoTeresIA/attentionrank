@@ -112,7 +112,7 @@ def preprocess_file( file_name):
         print('already')
         return
     # READ THE FILE
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r',encoding="utf-8" ) as file:
         text = file.read().replace('\n', '')
 
     # SEPARATE INTO SENTENCES
@@ -131,7 +131,7 @@ def preprocess_file( file_name):
 
     pickle.dump(feature_dicts_with_attn, open(os.path.join(save_path , file_identifier + '_orgbert_attn.pkl'), 'wb'))
 
-    with open(os.path.join(save_path , file_identifier + "_sentence_paired.txt"), "w") as outfile:
+    with open(os.path.join(save_path , file_identifier + "_sentence_paired.txt"), "w",encoding="utf-8") as outfile:
         outfile.write(str(feature_dicts_with_attn))
 
     # Serializing json
@@ -146,7 +146,7 @@ def preprocess_file( file_name):
     #print(json_object)
     # print(json_object)
     # Writing to sample.json
-    with open(os.path.join(save_path , file_identifier + "_orgbert_attn.json"), "w") as outfile:
+    with open(os.path.join(save_path , file_identifier + "_orgbert_attn.json"), "w",encoding="utf-8") as outfile:
         outfile.write(json_object)
 
 

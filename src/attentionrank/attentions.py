@@ -267,7 +267,7 @@ def step6(  max_sequence_length, num_docs):
 def step6_file( filename, max_sequence_length, num_docs):
     #thefile = "./" + dataset + "/docsutf8/" + filename
     thefile = os.path.join(DOCS_FOLDER , filename )
-    with open(thefile, 'r') as f:
+    with open(thefile, 'r',encoding="utf-8") as f:
         text = f.read().replace('\n', '')
 
     # dataset = 'SemEval2017'
@@ -387,7 +387,7 @@ def step7():
         # read token attn to list
         token_list = []
         attn_list = []
-        with open(os.path.join(token_attn_path , file + "token_attn_paired.csv"), newline='') as csvfile:
+        with open(os.path.join(token_attn_path , file + "token_attn_paired.csv"), newline='',encoding="utf-8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 k = row[0]
@@ -398,7 +398,7 @@ def step7():
         # read candidate tokens to dict
         candidate_token_dict = {}
         #print(candidate_token_path + file + "_candidate_tokenized.csv")
-        with open(os.path.join(candidate_token_path, file + "_candidate_tokenized.csv"), newline='') as csvfile:
+        with open(os.path.join(candidate_token_path, file + "_candidate_tokenized.csv"), newline='',encoding="utf-8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 k = row[0]
@@ -567,7 +567,7 @@ def step8(bertemb,nounModel,lang):
         text = ''
         my_file = os.path.join(DOCS_FOLDER , file + '.txt')  # text_path +
         # print(my_file)
-        with open(my_file, "r") as f:
+        with open(my_file, "r",encoding="utf-8") as f:
             for line in f:
                 if line:
                     print(text)
@@ -673,7 +673,7 @@ def step9(bertemb):
 
     for n, file in enumerate(files):
         #print(file)
-        fp = open(os.path.join(DOCS_FOLDER , file + '.txt'))
+        fp = open(os.path.join(DOCS_FOLDER , file + '.txt'),encoding="utf-8")
         # print("hola", fp.read().split('$$$$$$'))
         # print(fp.read())
         # sentences = [a for a in fp.read().split('$$$$$$')]
@@ -697,7 +697,7 @@ def step9(bertemb):
             # print(words)
             embeddings = sentence_with_embeddings[1]
             #print(save_path + file + '_sentence' + str(l) + '_word_embeddings.csv')
-            w0 = csv.writer(open(os.path.join(save_path , file + '_sentence' + str(l) + '_word_embeddings.csv'), "a"))
+            w0 = csv.writer(open(os.path.join(save_path , file + '_sentence' + str(l) + '_word_embeddings.csv'), "a",encoding="utf-8"))
             for i in range(len(words)):
                 w0.writerow([words[i], embeddings[i]])
 
@@ -834,7 +834,7 @@ def step10(language):
         for sentence_file in sentence_files:  # do not need to sort
             sentence_word_embedding = []
             # print(embedding_path + sentence_file)
-            with open(os.path.join(embedding_path , sentence_file), newline='') as csvfile:
+            with open(os.path.join(embedding_path , sentence_file), newline='',encoding="utf-8") as csvfile:
                 spamreader = csv.reader(csvfile, delimiter=',')
                 for row in spamreader:
                     # print(row[1])
@@ -864,7 +864,7 @@ def step10(language):
         querys_name_set = []
         querys_embedding_set = []
         querys_embeddings_path = os.path.join(PROCESSED_FOLDER, 'candidate_embedding')
-        with open(os.path.join(querys_embeddings_path , file + "_candidate_embedding.csv"), newline='') as csvfile:
+        with open(os.path.join(querys_embeddings_path , file + "_candidate_embedding.csv"), newline='',encoding="utf-8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 k = row[0]
@@ -901,7 +901,7 @@ def step10(language):
             output = cosine_similarity(query_inner_attn.cpu().numpy(), doc_inner_attn.cpu().numpy())
             ranking_dict[querys_name_set[w]] = float(output)
         print(ranking_dict)
-        w0 = csv.writer(open(os.path.join(save_path , file + '_candidate_cross_attn_value.csv'), "a"))
+        w0 = csv.writer(open(os.path.join(save_path , file + '_candidate_cross_attn_value.csv'), "a",encoding="utf-8"))
         for k, v in sorted(ranking_dict.items(), key=lambda item: item[1], reverse=True):
             # print(k,v)
             w0.writerow([k, v])
