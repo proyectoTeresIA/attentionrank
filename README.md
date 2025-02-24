@@ -38,12 +38,12 @@ Important: The dataset must be in this folder with any name and all documents mu
 Results will be provided inside the folder of the dataset in a folder named res+k_value
 
 ### Variables
---dataset_name: folder where the dataset is. Must be in the root folder of this project. (to be improved)
---model_name_or_path PlanTL: 
---model_type roberta: bert/roberta for the different tokenizers
---lang: language en/es
---type_execution: exec/eval to perform or not evaluation at the end
---k_value: nº of top keyphrases
+--dataset_name: folder where the dataset is. Must be in the root folder of this project. (to be improved)  
+--model_name_or_path PlanTL: model for the system   
+--model_type roberta: bert/roberta for the different tokenizers  
+--lang: language en/es  
+--type_execution: exec/eval to perform or not evaluation at the end  
+--k_value: nº of top keyphrases  
 
 ## Docker run 
 For a fast run use the dockerfile and this two commands. 
