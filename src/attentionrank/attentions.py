@@ -1,7 +1,7 @@
 from transformers import pipeline, AutoTokenizer, AutoModel
 
 from .preprocessing import separate_sentences
-from .utils import clean_folder, write_csv_file
+from .utils import clean_folder, write_csv_file, get_files_from_path,get_files_ids
 import numpy as np
 import pickle
 import os
@@ -193,7 +193,9 @@ def step_5(lang,bertemb,nounmodel):
     # print(text_path)
     #output_path = os.path.join(root_folder , 'processed_' + dataset_name) #root_folder + '/processed_' + dataset_name + '/'
 
-    files = os.listdir(DOCS_FOLDER)
+
+    files = get_files_from_path(DOCS_FOLDER)
+
     # for i, file in enumerate(files):
     #    files[i] = file[:-4]
 
@@ -255,7 +257,9 @@ def step6(  max_sequence_length, num_docs):
 
     #root_folder = os.path.join(".", dataset)
     #reading_path = os.path.join(root_folder, 'docsutf8')
-    files = os.listdir(DOCS_FOLDER)
+
+    files = get_files_from_path(DOCS_FOLDER)
+
     for f in files:
         step6_file( f, max_sequence_length, num_docs)
 
@@ -374,7 +378,8 @@ def step7():
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    files = os.listdir(DOCS_FOLDER)
+    files = get_files_from_path(DOCS_FOLDER)
+
     files = get_files_ids(files)  ## JUST IDS
 
     start_time = time.time()
@@ -551,9 +556,8 @@ def step8(bertemb,nounModel,lang):
     # for i, file in enumerate(files):
     #    files[i] = file[:-4]
 
-    files = os.listdir(DOCS_FOLDER)
-    for i, file in enumerate(files):
-        files[i] = file[:-4]
+    files = get_files_from_path(DOCS_FOLDER)
+    files = get_files_ids(files)
 
     print(DATASET_NAME, 'docs:', len(files))
 
@@ -665,10 +669,9 @@ def step9(bertemb):
     #text_path = './' + dataset + '/docsutf8/'
     #output_path = './' + dataset + '/processed_' + dataset + '/'
 
-    files = os.listdir(DOCS_FOLDER)
-    for i, file in enumerate(files):
-        files[i] = file[:-4]
-    files = files[:]
+    files = get_files_from_path(DOCS_FOLDER)
+    files= get_files_ids(files)
+
     print('docs:', len(files), files)
 
     for n, file in enumerate(files):
@@ -682,7 +685,7 @@ def step9(bertemb):
 
         sentences = separate_sentences(text)
 
-        save_path = os.path.join(PROCESSED_FOLDER , 'doc_word_embedding_by_sentences',  file )
+        save_path = os.path.join(PROCESSED_FOLDER , 'doc_word_embed_by_sen',  file )
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         else:
@@ -697,7 +700,7 @@ def step9(bertemb):
             # print(words)
             embeddings = sentence_with_embeddings[1]
             #print(save_path + file + '_sentence' + str(l) + '_word_embeddings.csv')
-            w0 = csv.writer(open(os.path.join(save_path , file + '_sentence' + str(l) + '_word_embeddings.csv'), "a",encoding="utf-8",newline=''))
+            w0 = csv.writer(open(os.path.join(save_path , file + '_sen' + str(l) + '_word_embedd.csv'), "a",encoding="utf-8",newline=''))
             for i in range(len(words)):
                 w0.writerow([words[i], embeddings[i]])
 
@@ -819,14 +822,14 @@ def step10(language):
         os.makedirs(save_path)
 
     # get files name
-    files = os.listdir(DOCS_FOLDER)
+    files = get_files_from_path(DOCS_FOLDER)
     files = get_files_ids(files)
 
     # run all files
     for n, file in enumerate(files):
 
         # doc embedding set
-        embedding_path = os.path.join(PROCESSED_FOLDER, 'doc_word_embedding_by_sentences' , file )
+        embedding_path = os.path.join(PROCESSED_FOLDER, 'doc_word_embed_by_sen' , file )
         sentence_files = os.listdir(embedding_path)  # get sentence list
         # print(sentence_files)
 

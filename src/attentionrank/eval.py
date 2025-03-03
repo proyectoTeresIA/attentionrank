@@ -4,7 +4,7 @@ import os
 import time
 
 from .attentions import  clean_folder
-from .utils import write_list_file
+from .utils import write_list_file,get_files_from_path,get_files_ids
 
 
 
@@ -67,12 +67,6 @@ def mean_f_p_r(actual, predicted, best=10, pr_plot=False):
         return np.mean(list_f1), np.mean(list_p), np.mean(list_r)
 
 
-def get_file_ids(text_path):
-    # get files name
-    files = os.listdir(text_path)
-    for i, file in enumerate(files):
-        files[i] = file[:-4]
-    return files
 
 
 def generate_results( language, f1_top=10):
@@ -112,7 +106,8 @@ def generate_results( language, f1_top=10):
     else:
         os.makedirs(save_path)
 
-    files = get_file_ids(DOCS_FOLDER)
+    files = get_files_from_path(DOCS_FOLDER)
+    files = get_files_ids(files)
     print('Files to process:', len(files))
 
     # load  df

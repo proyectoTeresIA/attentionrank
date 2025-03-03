@@ -14,6 +14,13 @@ def get_files_ids(files):
         files[i] = file[:-4]
     return files
 
+def get_files_from_path(reading_path):
+    fil=[]
+    files = os.listdir(reading_path)
+    for fi in files:
+        if fi.endswith('.txt'):
+            fil.append(fi)
+    return fil
 
 def clean_folder(path):
     files = glob.glob(path + '*')  # /YOUR/PATH/
