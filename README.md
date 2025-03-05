@@ -3,7 +3,7 @@ Repository to develop AttentionRank algorithm as library
 
 
 
-Based on the works: https://github.com/hd10-iupui/AttentionRank and https://github.com/oeg-upm/AttentionRankLib
+Based on the works: https://github.com/hd10-iupui/AttentionRank 
 
   
 
