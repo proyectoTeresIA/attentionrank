@@ -10,15 +10,7 @@ import shutil
 
 #### STEP 1-4 ####.  #### PABLO VERSION
 
-
-
-
-#root_folder = './SemEval2017/'
-#dataset_name = 'SemEval2017'
 nltk.download('punkt')
-#nltk.download('spanish')
-
-import re
 
 
 
@@ -159,14 +151,6 @@ def preprocessing_module( bertemb, type,lan):
     model_type= type
     global lang
     lang=lan
-
-
-    #rootfolder = './' + datasetname + '/'
-    #rootfolder = os.path.join(".", DA)
-    #global root_folder
-    #root_folder=rootfolder
-    #global dataset_name
-    #dataset_name=datasetname
 
     reading_path = DOCS_FOLDER#os.path.join(root_folder, 'docsutf8') #root_folder + 'docsutf8/'
     processing_path = PROCESSED_FOLDER#os.path.join(root_folder, 'processed_' + dataset_name ) #root_folder + 'processed_' + dataset_name + '/'

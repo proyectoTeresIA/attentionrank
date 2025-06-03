@@ -1,7 +1,9 @@
-from transformers import BertTokenizer, TFBertModel, AutoModel, AutoTokenizer,RobertaTokenizer,RobertaModel
+from transformers import BertTokenizer, TFBertModel, AutoModel, AutoTokenizer
 
 from src.attentionrank.attentions import step_5, step6,step7,step8,step9,step10,update_paths
-from src.attentionrank.ModelEmbedding import ModelEmbedding,NounPhrasesIdentifier
+from src.attentionrank.CandidatesGenerator import CandidatesGenerator
+from src.attentionrank.ModelEmbedding import ModelEmbedding
+
 from src.attentionrank.preprocessing import preprocessing_module, update_paths_preprocessing
 from src.attentionrank.eval import evaluate_results, generate_results, update_paths_eval
 
@@ -93,7 +95,7 @@ if __name__ == '__main__':
 
 
     bertemb= ModelEmbedding(modelname,type, tokenizer, model)
-    nounmodel = NounPhrasesIdentifier(lang)
+    candidategen = CandidatesGenerator(lang)
 
 
     # PATHS
@@ -106,7 +108,7 @@ if __name__ == '__main__':
     preprocessing_module(bertemb,type,lang)  #,tokenizer,model
     ## step 5
     print('STEP 5')
-    step_5(lang,bertemb,nounmodel)
+    step_5(lang,bertemb,candidategen)
     ## step 6
     print('STEP 6')
     step6( 512,20000)
@@ -117,7 +119,7 @@ if __name__ == '__main__':
 
     print('STEP 8')
 
-    step8(bertemb,nounmodel,lang)
+    step8(bertemb,candidategen,lang)
     ## step 9
     print('STEP 9')
 

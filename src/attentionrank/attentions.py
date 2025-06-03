@@ -5,10 +5,9 @@ from .utils import clean_folder, write_csv_file, get_files_from_path,get_files_i
 import numpy as np
 import pickle
 import os
-import glob
+
 import time
 import random
-import spacy
 import torch
 from torch import nn
 from string import punctuation
@@ -21,17 +20,6 @@ from .utils import get_files_ids
 import csv
 
 nltk.download('stopwords')
-
-
-# import sys
-# sys.path.append(os.path.abspath("/content/drive/MyDrive/AttentionRank-main"))
-# from bert import tokenization
-# from swisscom_ai.research_keyphrase.preprocessing.postagging import PosTaggingCoreNLP
-
-#from .input_representation import \    InputTextObj  # from swisscom_ai.research_keyphrase.model.input_representation import InputTextObj
-#from .extractor import \    extract_candidates  # from swisscom_ai.research_keyphrase.model.extractor import extract_candidates
-
-
 
 
 
@@ -289,7 +277,7 @@ def step6_file( filename, max_sequence_length, num_docs):
         return
     #print(text)
 
-    candidates = NounModel.generate_candidates(text,language)
+    candidates = NounModel.generate_candidates(text)
     print('Candidates', candidates)
 
 
@@ -305,22 +293,6 @@ def step6_file( filename, max_sequence_length, num_docs):
 
         line = convert_to_unicode(line).strip()  # tokenization.convert_to_unicode(line).strip()
         segments = []
-        '''
-        if not line:  # line is empty, deal the 2 segments in the [current doc tokens]
-            print('NOT HERE')
-            if current_doc_tokens:
-                # REVISAR ESTO for segment in prep_document(current_doc_tokens, args.max_sequence_length):
-                for segment in prep_document(current_doc_tokens, max_sequence_length):
-                    if (len(segment) - 1) / 2 != segment.index("[SEP]"):
-                        cline = raw_lines[l - 1].replace("),", "),$$$$$").split("$$$$$")
-                    segments.append(segment)
-                    if len(segments) >= num_docs:
-                        break
-                if len(segments) >= num_docs:
-                    break
-        
-            current_doc_tokens = []  # clean up [current doc tokens]
-        '''
 
         tokens= ModelEmb.get_tokens(line)
 
@@ -579,11 +551,12 @@ def step8(bertemb,nounModel,lang):
         # print(text)
         text = text.replace('$$$$$$', ' ')
 
-        candidates = NounModel.generate_candidates(text,language)
+        candidates = NounModel.generate_candidates(text)
         if len(candidates)==0:
             candidates.append('None')
             print('error')
-        print('Candidates total',candidates)
+
+        #print('Candidates total',candidates)
         rows = []
 
         # w1 = csv.writer(open(save_path + file + '_candidate_embedding.csv', "a"))
@@ -722,16 +695,15 @@ def self_attn_matrix(embedding_set):
     ls = np.shape(embedding_set)[0]
     # print(embedding_set)
 
-    Q = torch.tensor(embedding_set)
-    K = torch.tensor(embedding_set)
-    V = torch.tensor(embedding_set)
+    #Q = torch.tensor(embedding_set)
+    # Paso intermedio: convertir a un solo ndarray
+    embedding_array = np.array(embedding_set)
+    # Luego convertir a tensor
+    Q = torch.tensor(embedding_array)
+    K = torch.tensor(embedding_array)
+    V = torch.tensor(embedding_array)
     # embedding_set.detach().c
-    '''
-    
-    Q = embedding_set.detach().clone()
-    K = embedding_set.detach().clone()
-    V = embedding_set.detach().clone()
-    '''
+
     attn = torch.matmul(Q, K.transpose(-1, -2))
     attn = nn.Softmax(dim=1)(attn)
     V = torch.matmul(attn, V)
@@ -741,8 +713,10 @@ def self_attn_matrix(embedding_set):
 
 
 def cross_attn_matrix(D, Q):
-    D = torch.tensor(D)
-    Q = torch.tensor(Q)
+    embedding_D = np.array(D)
+    embedding_Q = np.array(Q)
+    D = torch.tensor(embedding_D)
+    Q = torch.tensor(embedding_Q)
     attn = torch.matmul(D, Q.transpose(-1, -2))
     S_d2q = nn.Softmax(dim=1)(attn)  # S_d2q : softmax the row; shape[len(doc), len(query)]
     S_q2d = nn.Softmax(dim=0)(attn)  # S_q2d : softmax the col; shape[len(doc), len(query)]
@@ -879,9 +853,6 @@ def step10(language):
                 querys_name_set.append(k)
                 querys_embedding_set.append(candidate_embeddings_set)
                 # print(k, candidate_embeddings_set)
-        #print(candidate_embeddings_set)
-        # print(len(querys_embedding_set))  # 29 querys embeddings
-        # print(len(querys_embedding_set[0]))  # how many embeddings in the query0
 
         # main
         ranking_dict = {}
@@ -903,7 +874,7 @@ def step10(language):
             doc_inner_attn = self_attn_matrix(doc_inner_attn)  # shape = (1, 768)
             output = cosine_similarity(query_inner_attn.cpu().numpy(), doc_inner_attn.cpu().numpy())
             ranking_dict[querys_name_set[w]] = float(output)
-        print(ranking_dict)
+        #print(ranking_dict)
         w0 = csv.writer(open(os.path.join(save_path , file + '_candidate_cross_attn_value.csv'), "a",encoding="utf-8",newline=''))
         for k, v in sorted(ranking_dict.items(), key=lambda item: item[1], reverse=True):
             # print(k,v)
