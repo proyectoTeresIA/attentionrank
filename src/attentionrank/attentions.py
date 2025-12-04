@@ -32,9 +32,14 @@ PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 
 def update_paths(dataset_name):
     """Actualiza las rutas globales cuando cambia el dataset"""
+    print(dataset_name)
+
+    ruta = os.path.normpath(dataset_name)  # Normaliza la ruta (quita / finales, etc.)
+    base=  os.path.basename(ruta)
     global DATASET_NAME, ROOT_FOLDER, DOCS_FOLDER, PROCESSED_FOLDER
-    DATASET_NAME = dataset_name
-    ROOT_FOLDER = os.path.join(".", DATASET_NAME)
+    DATASET_NAME = base
+    ROOT_FOLDER = dataset_name#os.path.join(".", DATASET_NAME)
+    print(ROOT_FOLDER)
     DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
     PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 

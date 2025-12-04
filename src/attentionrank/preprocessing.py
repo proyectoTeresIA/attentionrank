@@ -25,10 +25,12 @@ model_type=''
 
 
 def update_paths_preprocessing(dataset_name):
-    """Actualiza las rutas globales cuando cambia el dataset"""
+    ruta = os.path.normpath(dataset_name)  # Normaliza la ruta (quita / finales, etc.)
+    base=  os.path.basename(ruta)
     global DATASET_NAME, ROOT_FOLDER, DOCS_FOLDER, PROCESSED_FOLDER
-    DATASET_NAME = dataset_name
-    ROOT_FOLDER = os.path.join(".", DATASET_NAME)
+    DATASET_NAME = base
+    ROOT_FOLDER = dataset_name#os.path.join(".", DATASET_NAME)
+    print(ROOT_FOLDER)
     DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
     PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 
@@ -89,6 +91,52 @@ def separate_sentences(text):
     else:
         sentences = nltk.sent_tokenize(text)
     return sentences
+
+
+
+def preprocess_text(name, text):
+
+
+
+    output_path = PROCESSED_FOLDER #root_folder + '/processed_' + dataset_name + '/'
+    save_path = os.path.join(output_path, 'sentence_paired_text'  ) # output_path + 'sentence_paired_text/'
+
+
+
+
+    # SEPARATE INTO SENTENCES
+    sentences = separate_sentences(text)
+
+    feature_dicts_with_attn = []
+
+    for sentence in sentences:
+        feature_dicts_with_attn_sent = process_sentence(sentence)
+        feature_dicts_with_attn.append(feature_dicts_with_attn_sent)
+
+
+
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+
+    pickle.dump(feature_dicts_with_attn, open(os.path.join(save_path , name + '_orgbert_attn.pkl'), 'wb'))
+
+    with open(os.path.join(save_path , name + "_sentence_paired.txt"), "w",encoding="utf-8") as outfile:
+        outfile.write(str(feature_dicts_with_attn))
+
+    # Serializing json
+
+    token_sentences = []
+    for features in feature_dicts_with_attn:
+        token_sentences.append(features['tokens'])
+
+
+    json_object = json.dumps(token_sentences)  # [dictionary]
+
+    #print(json_object)
+    # print(json_object)
+    # Writing to sample.json
+    with open(os.path.join(save_path , name + "_orgbert_attn.json"), "w",encoding="utf-8") as outfile:
+        outfile.write(json_object)
 
 
 def preprocess_file( file_name):
@@ -168,9 +216,9 @@ def preprocessing_module( bertemb, type,lan):
 
     files = os.listdir(reading_path)
     for fi in files:
-        print('Processing file: ' + fi)
+        #print('Processing file: ' + fi)
         if fi.endswith('.txt'):
-            print(fi)
+
             preprocess_file( fi)
 
 

@@ -13,14 +13,18 @@ Based on the works: https://github.com/hd10-iupui/AttentionRank
 Using Python 3.9
 
 
-```
-pip install -r requirements.txt
-```
+
 
 
 ```
 pip install -e .
 ```
+
+For CPU use
+```
+pip install -r requirements-torch.txt
+```
+
 
 ```
 python -m spacy download en_core_web_sm
@@ -29,7 +33,22 @@ python -m spacy download es_core_news_sm
 ```
 
 
+
+
+
 ## Execution
+
+NEW! import as a library:
+
+```
+from attentionrank import AttentionRank, AttentionRankConfig
+cfg = AttentionRankConfig(lang="es",model_name_or_path="/Users/pablo/Downloads/maria/roberta-base-bne",model_type='roberta',log_level="INFO")
+extractor = AttentionRank(cfg)
+text1= "text example..."
+result = extractor.extract([text1],15)
+```
+
+or 
 
 ```
 python main.py --dataset_name example --model_name_or_path PlanTL-GOB-ES/roberta-base-bne --model_type roberta --lang es --type_execution exec --k_value 15

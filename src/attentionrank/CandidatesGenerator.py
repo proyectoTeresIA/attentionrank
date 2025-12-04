@@ -1,6 +1,6 @@
 
 import spacy
-import re
+
 
 
 class CandidatesGenerator():
@@ -108,6 +108,6 @@ class CandidatesGenerator():
 
 
 
-Generator =CandidatesGenerator('es')
-print(Generator.generate_candidates("Trabajo nocturno o laboral, extractivo"))
+#Generator =CandidatesGenerator('es')
+#print(Generator.generate_candidates("Trabajo nocturno o laboral, extractivo"))
 

@@ -2,11 +2,8 @@ import glob
 import os
 import csv
 import six
-import json
-import pickle
 import time
 
-import tensorflow as tf
 
 
 def get_files_ids(files):
@@ -67,40 +64,6 @@ def convert_to_unicode(text):
             raise ValueError("Unsupported string type: %s" % (type(text)))
     else:
         raise ValueError("Not running on Python2 or Python 3?")
-
-
-def load_json(path):
-    with tf.io.gfile.GFile(path, 'r') as f:
-        return json.load(f)
-
-
-def write_json(o, path):
-    tf.io.gfile.makedirs(path.rsplit('/', 1)[0])
-    with tf.io.gfile.GFile(path, 'w') as f:
-        json.dump(o, f)
-
-
-def load_pickle(path):
-    with tf.io.gfile.GFile(path, 'rb') as f:
-        return pickle.load(f)
-
-
-def write_pickle(o, path):
-    if '/' in path:
-        tf.io.gfile.makedirs(path.rsplit('/', 1)[0])
-        print(path)
-    with tf.io.gfile.GFile(path, 'wb') as f:
-        pickle.dump(o, f, -1)
-
-
-def logged_loop(iterable, n=None, **kwargs):
-    if n is None:
-        n = len(iterable)
-    ll = LoopLogger(n, **kwargs)
-    for i, elem in enumerate(iterable):
-        ll.update(i + 1)
-        yield elem
-
 
 class LoopLogger(object):
     """Class for printing out progress/ETA for a loop."""

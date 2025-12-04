@@ -5,15 +5,15 @@ from transformers import pipeline, AutoTokenizer, AutoModel
 
 class ModelEmbedding():
 
-    def __init__(self, model_name, type, tokenizer, model):
+    def __init__(self, model_name, Type, tokenizer, model):
         self.extractor = pipeline(model=model_name, task="feature-extraction")
         self.tokenizer = tokenizer
         self.model= model
-        self.type = type
+        self.Type = Type
 
     def __call__(self, data, oov_way='avg', filter_spec_tokens=True):
         #print(data)
-        if self.type=='roberta':
+        if self.Type=='roberta':
             if len(data)>0:
                 data[0]= ' '+data[0].lower()
         result = self.extractor(data, return_tensors=True,truncation=True)
@@ -25,9 +25,9 @@ class ModelEmbedding():
         for res, input in zip(result, ids['input_ids']):
             lis.append((input, res[0].cpu().detach().numpy()))
 
-        if self.type == 'bert':
+        if self.Type == 'bert':
             return self.embedding_constructor_bert(lis)
-        if self.type == 'roberta':
+        if self.Type == 'roberta':
             return self.embedding_constructor_roberta(lis)
 
         return self.embedding_constructor_bert(lis)
@@ -181,7 +181,7 @@ class ModelEmbedding():
 
 
     def getAttentions(self,sentence):
-        if self.type == 'roberta':
+        if self.Type == 'roberta':
             sentence = separar_caracteres(sentence)
             encoded_input = self.tokenizer(' ' + sentence.lower(), return_tensors='pt',truncation=True)
             output = self.model(**encoded_input)
@@ -194,7 +194,7 @@ class ModelEmbedding():
         return attentions,encoded_input
 
     def get_tokens(self,line):
-        if self.type == 'roberta':
+        if self.Type == 'roberta':
             tokens = self.tokenizer.tokenize(' '+line)
         else:
             tokens = self.tokenizer.tokenize(line)
@@ -210,12 +210,12 @@ def separar_caracteres(texto):
 
 
 # Ejemplo de uso
-
+"""
 texto_original = '(ejemplo-texto)'
 texto_separado = separar_caracteres(texto_original)
 print("Texto original:", texto_original)
 print("Texto separado:", texto_separado)
-
+"""
 
 
 

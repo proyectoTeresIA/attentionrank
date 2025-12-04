@@ -16,10 +16,12 @@ DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
 PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 
 def update_paths_eval(dataset_name):
-    """Actualiza las rutas globales cuando cambia el dataset"""
+    ruta = os.path.normpath(dataset_name)  # Normaliza la ruta (quita / finales, etc.)
+    base=  os.path.basename(ruta)
     global DATASET_NAME, ROOT_FOLDER, DOCS_FOLDER, PROCESSED_FOLDER
-    DATASET_NAME = dataset_name
-    ROOT_FOLDER = os.path.join(".", DATASET_NAME)
+    DATASET_NAME = base
+    ROOT_FOLDER = dataset_name#os.path.join(".", DATASET_NAME)
+    print(ROOT_FOLDER)
     DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
     PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 
@@ -73,6 +75,7 @@ def generate_results( language, f1_top=10):
     """
         Normed Integration and evaluation
     """
+    res=[]
     # f1_top = 10
 
     #datasetpath = './' + datasetname + '/'
@@ -251,10 +254,11 @@ def generate_results( language, f1_top=10):
         # save predicted single
         savefile= file+'.key'
         write_list_file(os.path.join(save_path,savefile),pred_single)
+        res.append(pred_single)
 
 
 
-
+    return res
     '''
     # print('Len actual', len(actual), len(predicted))
     mean_f1, mean_p, mean_r = mean_f_p_r(actual, predicted, f1_top)
