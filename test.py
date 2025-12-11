@@ -1,7 +1,3 @@
-
-
-
-
 from attentionrank import AttentionRank, AttentionRankConfig
 
 cfg = AttentionRankConfig(lang="es",model_name_or_path="/Users/pablo/Downloads/maria/roberta-base-bne",model_type='roberta',log_level="INFO")

@@ -16,7 +16,7 @@ nltk.download('punkt')
 
 # Variables globales (valores iniciales)
 DATASET_NAME = "default_dataset"
-ROOT_FOLDER = os.path.join(".", DATASET_NAME)
+ROOT_FOLDER = os.path.join("", DATASET_NAME)
 DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
 PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 lang='es'

@@ -701,11 +701,11 @@ class AttentionRankModel:
         if language == 'es':
             ## poner el español
             # stopwords_file = './src/attentionrank/UGIR_stopwords_es.txt'
-            stopwords_file = os.path.join(".", "src", "attentionrank", "UGIR_stopwords_es.txt")
+            stopwords_file = os.path.join("", "attentionrank", "UGIR_stopwords_es.txt")
             mystopwords = read_term_list_file(stopwords_file)
         else:
 
-            stopwords_file = os.path.join(".", "src", "attentionrank",
+            stopwords_file = os.path.join("",  "attentionrank",
                                           "UGIR_stopwords.txt")  # stopwords_file = './src/attentionrank/.txt'
             mystopwords = read_term_list_file(stopwords_file)
 
@@ -717,7 +717,7 @@ class AttentionRankModel:
                                                   'candidate_attn_paired')  # output_path + 'candidate_attn_paired/'
 
         # save_path = './' + dataset + '/res' + str(f1_top) + '/'
-        save_path = os.path.join(".", dataset, 'res' + str(f1_top))
+        save_path = os.path.join("", dataset, 'res' + str(f1_top))
 
         if os.path.exists(save_path):
             clean_folder(save_path + 'sentence_paired_text')

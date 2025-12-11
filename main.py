@@ -1,11 +1,11 @@
 from transformers import BertTokenizer, TFBertModel, AutoModel, AutoTokenizer
 
-from src.attentionrank.attentions import step_5, step6,step7,step8,step9,step10,update_paths
-from src.attentionrank.CandidatesGenerator import CandidatesGenerator
-from src.attentionrank.ModelEmbedding import ModelEmbedding
+from attentionrank import step_5, step6,step7,step8,step9,step10,update_paths
+from attentionrank import CandidatesGenerator
+from attentionrank import ModelEmbedding
 
-from src.attentionrank.preprocessing import preprocessing_module, update_paths_preprocessing
-from src.attentionrank.eval import evaluate_results, generate_results, update_paths_eval
+from attentionrank.preprocessing import preprocessing_module, update_paths_preprocessing
+from attentionrank.attentionrank import evaluate_results#, generate_results, update_paths_eval
 
 import argparse
 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     # PATHS
     update_paths(dataset_name)
-    update_paths_eval(dataset_name)
+    #update_paths_eval(dataset_name)
     update_paths_preprocessing(dataset_name)
 
 
@@ -130,11 +130,12 @@ if __name__ == '__main__':
     step10(lang)
     ## step 11
 
-    generate_results(lang,k_val)
+    ## Deadlines
+    #generate_results(lang,k_val)
 
-    if args.type_execution == 'eval':
-        print('EVALUATION')
-        evaluate_results(k_val)
+    #if args.type_execution == 'eval':
+        #print('EVALUATION')
+        #evaluate_results(k_val)
     
 
 

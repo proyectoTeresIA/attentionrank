@@ -1,10 +1,3 @@
-
-from transformers import BertTokenizer, TFBertModel, AutoModel, AutoTokenizer, RobertaTokenizer,RobertaModel
-
-from src.attentionrank.preprocessing import preprocessing_module
-from src.attentionrank.eval import evaluate_results
-
-
 '''
 #FacebookAI/roberta-base
 modelname= 'roberta-base' #'roberta-base'  #'bert-base-uncased'
@@ -168,13 +161,6 @@ for token in doc:
     print(token.idx)
 
 '''
-
-
-
-
-
-from nltk.tokenize import sent_tokenize
-
 
 '''
 texto = "Hola, esto es una prueba. ¿Funcionará el tokenizador de frases? Espero que sí."

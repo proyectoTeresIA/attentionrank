@@ -11,7 +11,7 @@ from .utils import write_list_file,get_files_from_path,get_files_ids
 
 # Variables globales (valores iniciales)
 DATASET_NAME = "default_dataset"
-ROOT_FOLDER = os.path.join(".", DATASET_NAME)
+ROOT_FOLDER = os.path.join("", DATASET_NAME)
 DOCS_FOLDER = os.path.join(ROOT_FOLDER, "docsutf8")
 PROCESSED_FOLDER = os.path.join(ROOT_FOLDER, f"processed_{DATASET_NAME}")
 
@@ -86,11 +86,11 @@ def generate_results( language, f1_top=10):
     if language =='es':
         ## poner el español
         #stopwords_file = './src/attentionrank/UGIR_stopwords_es.txt'
-        stopwords_file = os.path.join(".","src", "attentionrank","UGIR_stopwords_es.txt")
+        stopwords_file = os.path.join("", "src", "attentionrank", "UGIR_stopwords_es.txt")
         mystopwords = read_term_list_file(stopwords_file)
     else:
 
-        stopwords_file = os.path.join(".","src", "attentionrank","UGIR_stopwords.txt") #stopwords_file = './src/attentionrank/.txt'
+        stopwords_file = os.path.join("", "src", "attentionrank", "UGIR_stopwords.txt") #stopwords_file = './src/attentionrank/.txt'
         mystopwords = read_term_list_file(stopwords_file)
 
     dataset = DATASET_NAME
@@ -100,7 +100,7 @@ def generate_results( language, f1_top=10):
     accumulated_self_attn_path = os.path.join(PROCESSED_FOLDER,'candidate_attn_paired')  # output_path + 'candidate_attn_paired/'
 
     #save_path = './' + dataset + '/res' + str(f1_top) + '/'
-    save_path = os.path.join(".", dataset, 'res' + str(f1_top))
+    save_path = os.path.join("", dataset, 'res' + str(f1_top))
 
 
     if os.path.exists(save_path):
