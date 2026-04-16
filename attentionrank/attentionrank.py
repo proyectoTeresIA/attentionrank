@@ -58,6 +58,25 @@ class AttentionRankModel:
 
 
 
+    def __prepare_paths(self, dataset_path):
+        if isinstance(dataset_path, str):
+            ruta = os.path.normpath(dataset_path)  # Normaliza la ruta (quita / finales, etc.)
+            name = os.path.basename(ruta)
+            self.DATASET_NAME= name
+            self.ROOT_FOLDER= ruta
+            self.DOCS_FOLDER = os.path.join(self.ROOT_FOLDER, "docsutf8")
+            self.PROCESSED_FOLDER = os.path.join(self.ROOT_FOLDER, f"processed_{self.DATASET_NAME}")
+            #preprocessing_module(self.DOCS_FOLDER,self.PROCESSED_FOLDER,self.bertemb,self.cfg.model_type,self.cfg.lang)  # ,tokenizer,model
+
+        if isinstance(dataset_path, list):
+            self.DATASET_NAME = "aux"
+            self.ROOT_FOLDER = "./aux"
+            self.DOCS_FOLDER = os.path.join(self.ROOT_FOLDER, "docsutf8")
+            self.PROCESSED_FOLDER = os.path.join(self.ROOT_FOLDER, f"processed_{self.DATASET_NAME}")
+
+
+
+
     def __prepare_dataset(self, dataset_path):
         if isinstance(dataset_path, str):
             ruta = os.path.normpath(dataset_path)  # Normaliza la ruta (quita / finales, etc.)
@@ -84,6 +103,12 @@ class AttentionRankModel:
 
 
 
+
+    def do_eval(self, dataset_path, k_value ):
+        # PATHS
+        self.__prepare_paths(dataset_path)
+        print('EVALUATION IN K '+str(k_value))
+        evaluate_results(self.ROOT_FOLDER, k_value)
 
 
     def extract_terms(self, dataset_path, mode, k_value ):
@@ -242,7 +267,7 @@ class AttentionRankModel:
         # print(text)
 
         candidates = self.candidategen.generate_candidates(text)
-        print('Candidates', candidates)
+        #print('Candidates', candidates)
 
         # w = csv.writer(open(save_path + file + "_candidate_tokenized.csv", "w"))
         rows = []
@@ -318,7 +343,7 @@ class AttentionRankModel:
         start_time = time.time()
 
         for n, file in enumerate(files):
-            print(file)
+            #print(file)
             if os.path.exists(os.path.join(save_path, file + "_attn_paired.csv")):
                 print('already')
                 continue
@@ -425,7 +450,7 @@ class AttentionRankModel:
             with open(my_file, "r", encoding="utf-8") as f:
                 for line in f:
                     if line:
-                        print(text)
+                        #print(text)
                         text += line
             # print(text)
             text = text.replace('$$$$$$', ' ')
@@ -717,10 +742,10 @@ class AttentionRankModel:
                                                   'candidate_attn_paired')  # output_path + 'candidate_attn_paired/'
 
         # save_path = './' + dataset + '/res' + str(f1_top) + '/'
-        save_path = os.path.join("", dataset, 'res' + str(f1_top))
+        save_path = os.path.join(datasetpath, 'res' + str(f1_top))
 
         if os.path.exists(save_path):
-            clean_folder(save_path + 'sentence_paired_text')
+            clean_folder(save_path)
 
         else:
             os.makedirs(save_path)
@@ -1328,11 +1353,15 @@ def evaluate_results(ROOT_FOLDER,f1_top):
 
     keys_path = os.path.join(datasetpath, 'keys')
     res_path = os.path.join(datasetpath, 'res' + str(f1_top))
+
+
     predicted = []
     actual = []
 
     keyfiles = os.listdir(keys_path)
     resfiles = os.listdir(res_path)
+    keyfiles[:] = [f for f in keyfiles if f.endswith(".key")]
+    resfiles[:] = [f for f in resfiles if f.endswith(".key")]
     if len(keyfiles) != len(resfiles):
         print('FATAL ERROR', keyfiles, resfiles)
         return
@@ -1340,11 +1369,11 @@ def evaluate_results(ROOT_FOLDER,f1_top):
     print('Files to process:', len(keyfiles))
 
     for keyf in keyfiles:
-        key_single = read_term_list_file(keys_path + keyf)
+        key_single = read_term_list_file(keys_path +"/"+ keyf)
         key_single = list(set(key_single))
         actual.append(key_single)
 
-        pred_single = read_term_list_file(res_path + keyf)
+        pred_single = read_term_list_file(res_path +"/"+ keyf)
         pred_single = list(set(pred_single))
         predicted.append(pred_single)
 

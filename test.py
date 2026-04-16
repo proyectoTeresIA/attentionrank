@@ -11,6 +11,21 @@ extractor = AttentionRank(cfg)
 texto1= """
 La mala conducta de oxidación es la principal barrera para el aumento del uso de aleaciones basadas en titanio en aplicaciones estructurales de alta temperatura. La demanda de aumentar la temperatura de servicio de estas aleaciones más allá de los 550°C (el límite de temperatura típico) requiere un estudio cuidadoso para comprender el papel que la composición tiene en la conducta de oxidación de las aleaciones basadas en titanio [1–3]. El intento de superar esta limitación en las aleaciones basadas en titanio ha llevado a la producción de aleaciones con resistencia a la oxidación sustancialmente mejorada, como el β-21S, y también al desarrollo de recubrimientos y técnicas de preoxidación [1,4–6]. Aunque es tentador extrapolar la conducta de oxidación (por ejemplo, la ley de velocidad de oxidación, la profundidad de penetración de oxígeno y el grosor de la capa) observada para un número limitado de composiciones bajo cierta condición de oxidación a un rango composicional más amplio, hay numerosos ejemplos en la literatura donde se observan desviaciones de las relaciones esperadas [7,8].
 """
-result = extractor.extract([texto1],15)
-print(result)
-print(len(result[0]))
+
+#result = extractor.extract([texto1],15)
+#print(result)
+#print(len(result[0]))
+
+#extractor.evaluate("/Users/pablo/Downloads/TeresIA-JURI_VersionFinal-AT","",5)
+#extractor.evaluate("/Users/pablo/Downloads/TeresIA-JURI_VersionFinal-AT","",10)
+
+
+path= "/Users/pablo/Downloads/Teresia/TeresIA-JURI_VersionFinal-AT"
+extractor.evaluate(path,"",15)
+
+
+
+#extractor.do_eval(path,"",15)
+#extractor.do_eval("/Users/pablo/Downloads/TeresIA-JURI_VersionFinal-AT","",10)
+#extractor.do_eval("/Users/pablo/Downloads/TeresIA-JURI_VersionFinal-AT","",15)
+#extractor.do_eval("/Users/pablo/Downloads/TeresIA-JURI_VersionFinal-AT","",30)

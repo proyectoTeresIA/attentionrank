@@ -29,7 +29,10 @@ class AttentionRank:
         results= self.model.extract_terms(dataset,"eval",k_values)
         return results
 
+    def do_eval(self, dataset: Union[str, Path, List[str]], eval_dataset: Union[str, Path, List[str]], k_values):
 
+        results= self.model.do_eval(dataset,k_values)
+        return results
 
     def __prune_values(self,data: List[List[Any]], n: int) -> List[List[Any]]:
         """
