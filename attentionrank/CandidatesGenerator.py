@@ -3,7 +3,7 @@ import spacy
 from spacy.matcher import Matcher
 
 
-patterns=[
+patterns_es=[
 ["NOUN"],
 ["NOUN","ADJ"],
 ["NOUN","ADP","NOUN"],
@@ -26,6 +26,25 @@ patterns=[
 #["NOUN","ADP","PROPN"]
 ]
 
+patterns_en=[
+    ["NOUN"],
+    ["PROPN"],
+    ["ADJ"],
+    ["VERB"],
+    ["ADV"],
+    ["NOUN", "NOUN"],
+    ["ADJ", "NOUN"],
+    ["NOUN", "NOUN", "NOUN"],
+    ["ADJ", "NOUN", "NOUN"],
+    ["ADJ", "ADJ", "ADJ"],
+    ["NOUN", "ADJ"],
+    ["ADP", "DET", "NOUN"],
+    ["ADP", "NOUN"],
+    ["NOUN", "ADP", "NOUN"],
+    ["PROPN", "PROPN"],
+    ["NOUN", "ADJ", "ADJ"],
+]
+
 class CandidatesGenerator():
 
     def __init__(self,lang):
@@ -43,11 +62,11 @@ class CandidatesGenerator():
     def generate_candidates(self, text):
 
         if self.lang == 'es':
-            candidates = self.extract_terms(text,patterns,mode="all")
+            candidates = self.extract_terms(text,patterns_es,mode="all")
             return self.filtrar_strings(candidates)
 
         else:
-            candidates = self.extract_terms(text,patterns,mode="all")
+            candidates = self.extract_terms(text,patterns_en,mode="all")
             return self.filtrar_strings(candidates)
 
 
