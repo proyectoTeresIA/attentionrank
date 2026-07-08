@@ -85,8 +85,8 @@ Este código se ha mejorado y adaptado en el marco del proyecto TeresIA, proyect
 
 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: nowrap;">
 <img src="https://github.com/proyectoTeresIA/.github/blob/main/profile/img/ministerio.jpg" width="186" alt="Ministerio Logo">
-<img src="img/pr.jpg" width="186" alt="PR Logo">
-<img src="img/ue.jpg" width="186" alt="UE Logo">
-<img src="img/teresia_logo.jpg" width="186" alt="TeresIA Logo">
+<img src="https://github.com/proyectoTeresIA/.github/blob/main/profile/img/pr.jpg" width="186" alt="PR Logo">
+<img src="https://github.com/proyectoTeresIA/.github/blob/main/profile/img/ue.jpg" width="186" alt="UE Logo">
+<img src="https://github.com/proyectoTeresIA/.github/blob/main/profile/img/teresia_logo.jpg" width="186" alt="TeresIA Logo">
 
 </div>
