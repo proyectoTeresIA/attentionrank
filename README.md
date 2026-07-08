@@ -83,3 +83,10 @@ docker run --rm -v ./example:/app/example attentionranklib --dataset_name exampl
 Este código se ha mejorado y adaptado en el marco del proyecto TeresIA, proyecto de investigación financiado con fondos de la Unión Europea Next GenerationEU / PRTR a través del Ministerio de Asuntos Económicos y Transformación Digital (hoy Ministerio para la Transformación Digital y de la Función Pública). 
 
 
+<div style="display: flex; gap: 10px; align-items: center; flex-wrap: nowrap;">
+<img src="https://github.com/proyectoTeresIA/.github/blob/main/profile/img/ministerio.jpg" width="186" alt="Ministerio Logo">
+<img src="img/pr.jpg" width="186" alt="PR Logo">
+<img src="img/ue.jpg" width="186" alt="UE Logo">
+<img src="img/teresia_logo.jpg" width="186" alt="TeresIA Logo">
+
+</div>
